@@ -116,11 +116,11 @@
             //synth.triggerAttackRelease('E4',  ["2n", "4n", "4n"]);
 
 
-/*            var polySynth = new Tone.PolySynth(3, Tone.Synth).toMaster();
-            polySynth.triggerAttackRelease(["C4", "E4", "G4"], "8n",1);
-            polySynth.triggerAttackRelease(["G3", "B3", "D4"], "8n",2);
-            polySynth.triggerAttackRelease(["A3", "C4", "E4"], "8n",3);
-            polySynth.triggerAttackRelease(["F3", "A3", "C4"], "8n",4);*/
+            /*            var polySynth = new Tone.PolySynth(3, Tone.Synth).toMaster();
+                        polySynth.triggerAttackRelease(["C4", "E4", "G4"], "8n",1);
+                        polySynth.triggerAttackRelease(["G3", "B3", "D4"], "8n",2);
+                        polySynth.triggerAttackRelease(["A3", "C4", "E4"], "8n",3);
+                        polySynth.triggerAttackRelease(["F3", "A3", "C4"], "8n",4);*/
 
 
 
@@ -131,8 +131,8 @@
 
 //play a middle 'C' for the duration of an 8th note
                 polySynth.triggerAttackRelease(["C4", "E4", "G4"], "8n");
-/*                synth.triggerAttackRelease(msg + "3", "8n");
-                synth.triggerAttackRelease(msg + "5", "8n");*/
+                /*                synth.triggerAttackRelease(msg + "3", "8n");
+                                synth.triggerAttackRelease(msg + "5", "8n");*/
                 $('#messages').append($('<li>').text(msg));
             });
         });
