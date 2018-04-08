@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+    <title>Socket.IO player</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/js/Tone.min.js"></script>
+
+
+    <script>
+        $(function () {
+            var socket = io();
+
+            //var synth = new Tone.Synth().toMaster();
+            var synth1 = new Tone.PolySynth(3, Tone.Synth).toMaster();
+
+            var synth = new Tone.Synth().toMaster();
+
+            var part = new Tone.Part(function(time, note){
+                //the notes given as the second element in the array
+                //will be passed in as the second argument
+
+                synth.triggerAttackRelease(note.noteName, note.duration, time);
+            }, [
+                {
+                    "time": 0,
+                    "noteName": "E4",
+                    "duration": "2n+4n"
+                },
+                {
+                    "time": "0:3",
+                    "noteName": "F4",
+                    "duration": "8n"
+                },
+                {
+                    "time": "0:3:2",
+                    "noteName": "E4",
+                    "duration": "8n"
+                },
+                {
+                    "time": "1:0",
+                    "noteName": "D4",
+                    "duration": "2n+4n"
+                },
+                {
+                    "time": "1:3",
+                    "noteName": "E4",
+                    "duration": "8n"
+                },
+                {
+                    "time": "1:3:2",
+                    "noteName": "D4",
+                    "duration": "8n"
+                },
+                {
+                    "time": "2:0",
+                    "noteName": "C4",
+                    "duration": "2n"
+                },
+                {
+                    "time": "2:2",
+                    "noteName": "C5",
+                    "duration": "4n"
+                },
+                {
+                    "time": "2:3",
+                    "noteName": "B4",
+                    "duration": "4n"
+                },
+                {
+                    "time": "2:4",
+                    "noteName": "A4",
+                    "duration": "4n"
+                },
+            ]);
+
+            var part1 = new Tone.Part(function(time, note){
+                //the notes given as the second element in the array
+                //will be passed in as the second argument
+
+                synth1.triggerAttackRelease(note.noteName, note.duration, time);
+            }, [
+                {
+                    "time": 0,
+                    "noteName": ["C3", "E3", "G3"],
+                    "duration": "1m"
+                },
+                {
+                    "time": "1:0",
+                    "noteName": ["G3", "B3", "D4"],
+                    "duration": "1m"
+                },
+                {
+                    "time": "2:0",
+                    "noteName": ["A3", "C4", "E4"],
+                    "duration": "1m"
+                },
+            ]);
+
+
+            part.start();
+            part1.start();
+            //Tone.Transport.swing = 0.5;
+            Tone.Transport.start(0);
+
+            //synth.triggerAttackRelease('E4',  ["2n", "4n", "4n"]);
+
+
+/*            var polySynth = new Tone.PolySynth(3, Tone.Synth).toMaster();
+            polySynth.triggerAttackRelease(["C4", "E4", "G4"], "8n",1);
+            polySynth.triggerAttackRelease(["G3", "B3", "D4"], "8n",2);
+            polySynth.triggerAttackRelease(["A3", "C4", "E4"], "8n",3);
+            polySynth.triggerAttackRelease(["F3", "A3", "C4"], "8n",4);*/
+
+
+
+            socket.on('chat message', function(msg){
+                //create a synth and connect it to the master output (your speakers)
+
+                msg =msg.toUpperCase().substr(0,1);
+
+//play a middle 'C' for the duration of an 8th note
+                polySynth.triggerAttackRelease(["C4", "E4", "G4"], "8n");
+/*                synth.triggerAttackRelease(msg + "3", "8n");
+                synth.triggerAttackRelease(msg + "5", "8n");*/
+                $('#messages').append($('<li>').text(msg));
+            });
+        });
+    </script>
+
+
+
+</head>
+<body>
+<ul id="messages"></ul>
+</body>
+</html>
