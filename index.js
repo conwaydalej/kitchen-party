@@ -20,8 +20,11 @@ app.use('/tone', express.static(path.join(__dirname, '/node_modules/tone/build/'
 
 io.on('connection', function(socket){
     console.log('a user connected');
-    socket.on('chat message', function(msg){
-        io.emit('chat message', msg);
+    socket.on('startnote', function(msg){
+        io.emit('startnote', msg);
+    });
+    socket.on('stopnote', function(msg){
+        io.emit('stopnote', msg);
     });
     socket.on('disconnect', function(){
         console.log('user disconnected');
