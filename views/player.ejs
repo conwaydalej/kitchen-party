@@ -2,7 +2,7 @@
     <script>
         var socket = io();
         $(function () {
-
+/*
             var synth1 = new Tone.PolySynth(3, Tone.Synth,{
                 "envelope": {
                     "attack": 0.01,
@@ -11,7 +11,7 @@
                     "release": 0.4,
                     "attackCurve" : "exponential"
                 },
-            }).toMaster();
+            }).toMaster();*/
 
 /*            synth1.set({
                 "envelope" : {
@@ -43,19 +43,32 @@
                 ['F3', 'C4']
             ];
 
+            var accordion = new Tone.Sampler({
+                'C3' : '11-C3.wav',
+                'E3' : '15-E3.wav',
+                'G3' : '18-G3.wav',
+                'A3' : '20-A3.wav',
+                'B3' : '22-B3.wav',
+                'C4' : '23-C4.wav',
+                'D4' : '25-D4.wav',
+                'E4' : '27-E4.wav',
+
+            }, {
+                'release' : 1,
+                'baseUrl' : '/sounds/diatonic-accordion/'
+            }).toMaster();
+
+
 
             socket.on('startnote', function(msg){
                 console.log('start' + msg);
-                synth1.triggerAttack(
-                    notes[parseInt(msg)][1]
-                );
-                synth1.triggerAttack(
+                accordion.triggerAttack(
                     notes[parseInt(msg)][1]
                 );
             });
             socket.on('stopnote', function(msg){
                 console.log('stop' + msg);
-                synth1.triggerRelease(
+                accordion.triggerRelease(
                     notes[parseInt(msg)][1]
                 );
             });

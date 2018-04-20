@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/',index);
 app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist/')));
 app.use('/tone', express.static(path.join(__dirname, '/node_modules/tone/build/')));
+app.use('/sounds/diatonic-accordion', express.static(path.join(__dirname, 'public/sounds/diatonic-accordion')));
 
 io.on('connection', function(socket){
     console.log('a user connected');
