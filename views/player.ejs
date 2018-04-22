@@ -1,6 +1,6 @@
 <% include partials/head.ejs %>
     <script>
-        var socket = io();
+        var socket = io({path:'/kitchen-party/socket.io'});
         $(function () {
 /*
             var synth1 = new Tone.PolySynth(3, Tone.Synth,{
