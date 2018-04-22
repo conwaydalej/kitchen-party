@@ -1,49 +1,68 @@
 <% include partials/head.ejs %>
 <% notes = [
-    ['C', ["C3", "E3", "G3"]],
     ['C1', 'C3'],
     ['C2', 'E3'],
     ['C3', 'G3'],
 
-    ['G', ["G3", "B3", "D4"]],
     ['G1', 'G3'],
     ['G2', 'B3'],
     ['G3', 'D4'],
 
-    ['Am', ["A3", "C4", "E4"]],
     ['Am1', 'A3'],
     ['Am2', 'C4'],
     ['Am3', 'E4'],
 
-    ['F', ["F3", "A3", "C4"]],
     ['F1', 'F3'],
     ['F2', 'A3'],
     ['F3', 'C4']
 ];
 %>
 
-<h3>Notes:</h3>
-<% notes.forEach(function(note, i, arr){ %>
-<br/><label><%= note[0] %>
-    <input type="radio" name="note" value="<%= i %>">
-</label>
-<% }); %>
+<div class="grid-x">
 
+    <% notes.forEach(function(note, i, arr){ %>
+    <div class="cell small-4">
 
-<button class="play">Play</button>
+        <div class="switch large">
+
+            <input class="switch-input" id="exampleRadioSwitch<%= i %>" type="radio" name="note" value="<%= i %>">
+            <label class="switch-paddle" for="exampleRadioSwitch<%= i %>">
+                <span class="show-for-sr">Note Name</span>
+                <span class="switch-active" aria-hidden="true"><%= note[0] %></span>
+                <span class="switch-inactive" aria-hidden="true"><%= note[0] %></span>
+
+            </label>
+
+        </div>
+        <br/>
+    </div>
+
+    <% }); %>
+
+    <div class="cell"><a href="#" class="button large play noselect expanded">Play</a>
+    </div>
+</div>
+
 
 <script>
     var socket = io();
     jQuery(function ($) {
+        $('.play').on('click',function(e){
+            e.preventDefault();
+        })
         $('.play')
-            .on('mousedown', function () {
+            .on('touchstart mousedown', function (e) {
+                event.stopPropagation(); // Stop event bubbling.
+                event.preventDefault(); // Prevent default behaviour
                 var val = parseInt($('input[name=note]:checked').val());
                 socket.emit('startnote', val);
             });
-        $('.play').on('mouseup', function () {
-                var val = parseInt($('input[name=note]:checked').val());
-                socket.emit('stopnote', val);
-            })
+        $('.play').on('touchend mouseup', function (e) {
+            event.stopPropagation(); // Stop event bubbling.
+            event.preventDefault(); // Prevent default behaviour
+            var val = parseInt($('input[name=note]:checked').val());
+            socket.emit('stopnote', val);
+        })
     })
 
 </script>

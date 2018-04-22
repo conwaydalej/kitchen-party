@@ -10,13 +10,13 @@ app.set('view engine', 'ejs');
 
 const index = require('./routes/index');
 
-
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/',index);
 app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dist/')));
 app.use('/tone', express.static(path.join(__dirname, '/node_modules/tone/build/')));
+app.use('/foundation', express.static(path.join(__dirname, '/node_modules/foundation-sites/dist/')));
+app.use('/what-input', express.static(path.join(__dirname, '/node_modules/what-input/dist/')));
 app.use('/sounds/diatonic-accordion', express.static(path.join(__dirname, 'public/sounds/diatonic-accordion')));
 
 io.on('connection', function(socket){
